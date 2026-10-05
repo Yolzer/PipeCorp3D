@@ -8,9 +8,6 @@
 
 [node name="PlumberEntity" parent="." unique_id=1240261187 instance=ExtResource("1_kycxd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15539837, 0.41350472, -7.5550795)
-player_id = &"Player_1"
-move_speed = 4.5
-acceleration = 12.0
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=2144317610]
 use_collision = true

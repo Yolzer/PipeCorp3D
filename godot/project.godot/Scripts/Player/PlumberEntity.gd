@@ -1,9 +1,5 @@
 class_name PlumberEntity
 extends CharacterBody3D
-## The plumber's BODY: pure simulation, zero input reading.
-## It is "possessed" by a PlayerController (local keyboard/mouse today, a network
-## peer tomorrow) that writes intents: move_intent, apply_look(), request_interact().
-## Required children: Camera3D (named "Camera3D") > RayCast3D (named "RayCast3D").
 
 @export var player_id: StringName = &"Player_1"
 @export var move_speed: float = 4.5
