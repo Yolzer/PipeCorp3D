@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { validateEnv } from './config/env.validation';
 import { DatabaseModule } from './database/database.module';
+import { GameModule } from './game/game.module';
 import { HealthController } from './health/health.controller';
 import { ProfileModule } from './profile/profile.module';
 
@@ -12,6 +13,7 @@ import { ProfileModule } from './profile/profile.module';
     DatabaseModule,
     AuthModule,
     ProfileModule,
+    GameModule,
   ],
   controllers: [HealthController],
 })
