@@ -16,6 +16,8 @@ var is_occupied: bool:
 
 @onready var _visual_socket: Node3D = get_node_or_null(^"VisualSocket") as Node3D
 @onready var _real_pipe: Node3D = get_node_or_null(^"RealPipeMesh") as Node3D
+# Safely typed SFX reference to match Claude's architecture
+@onready var _placement_sfx: AudioStreamPlayer3D = get_node_or_null(^"PlacementSFX") as AudioStreamPlayer3D
 
 
 func _ready() -> void:
@@ -38,3 +40,6 @@ func occupy(item_code: StringName) -> void:
 		_visual_socket.visible = false
 	if _real_pipe != null:
 		_real_pipe.visible = true
+	# Play the spatial sound if the node exists
+	if _placement_sfx != null:
+		_placement_sfx.play()
