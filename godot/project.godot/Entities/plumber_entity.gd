@@ -34,9 +34,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
 
 	# 3. Raycast interaction triggers (SPACE or ENTER)
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER:
-			_handle_interaction_attempt()
+	if event.is_action_pressed("interact"):
+		_handle_interaction_attempt()
 
 func _physics_process(delta: float) -> void:
 	# Apply gravity if in the air
@@ -70,25 +69,16 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _handle_interaction_attempt() -> void:
-	print("--- KEY PRESSED (SPACE / ENTER DETECTED) ---")
-	
 	raycast.force_raycast_update()
-	
-	if raycast.is_colliding():
-		var target: Object = raycast.get_collider()
-		print("[QA] Raycast hit object: ", target.name if target else "null")
-		
-		if target is GridSocket:
-			print("[QA] Object IS a GridSocket.")
-			if not target.is_occupied:
-				print("[QA] Socket is free! Emitting intent to SignalBus...")
-				SignalBus.intent_place_pipe.emit(target.socket_id, "pvc_90_deg")
-			else:
-				print("[QA] Failed: Socket is occupied.")
-		else:
-			print("[QA] Failed: Hit non-socket object. Class: ", target.get_class() if target else "unknown")
-	else:
-		print("[QA] Failed: Raycast hit NOTHING (out of range or aimed at empty space).")
+	if not raycast.is_colliding():
+		return
+	var socket: GridSocket = raycast.get_collider() as GridSocket
+	if socket == null:
+		return
+	if socket.is_occupied:
+		print("[QA] Socket occupied: ", socket.socket_id)
+		return
+	SignalBus.intent_place_pipe.emit(socket.socket_id, "pvc_90_deg")
 
 func _on_pipe_placed_successfully(confirmed_socket_id: String, coordinates: Vector3i) -> void:
 	print("[PlumberEntity] Visual update received for: ", confirmed_socket_id, " at coords: ", coordinates)
