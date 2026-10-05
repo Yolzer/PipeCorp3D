@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://mvkdj5g3mtrj"]
 
-[ext_resource type="Script" uid="uid://cbr0738c0plu3" path="res://Scripts/Player/PlumberEntity.gd" id="1_6a5os"]
+[ext_resource type="Script" uid="uid://36d5pvf4nwvm" path="res://Scripts/Player/PlumberEntity.gd" id="1_6a5os"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qc45"]
 
 [node name="PlumberEntity" type="CharacterBody3D" unique_id=1240261187]
 collision_layer = 2
 script = ExtResource("1_6a5os")
+player_id = null
+move_speed = null
+acceleration = null
+pitch_limit_deg = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1639801268]
 shape = SubResource("CapsuleShape3D_5qc45")
@@ -15,6 +19,6 @@ shape = SubResource("CapsuleShape3D_5qc45")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=632372149]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 collision_mask = 13
 collide_with_areas = true

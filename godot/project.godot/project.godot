@@ -18,8 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 SignalBus="*uid://de71ej50asc0e"
-NetworkManager="*uid://r7wonsysw6fc"
 GridManager="*uid://cehpa6i4svpjx"
+ApiClient="*uid://b65tnejgl62ya"
+JobSession="*uid://djxoa6w1dfvt"
+SaveService="*uid://b6bw6l3xhvqdc"
 
 [debug]
 
