@@ -12,3 +12,13 @@
 
 # Backup files
 *.bak
+
+# Godot
+godot/.godot/
+*.import.tmp
+
+# NestJS (next step)
+backend/node_modules/
+backend/dist/
+.env
+*.pem
