@@ -28,6 +28,8 @@ var _siss_touches: Array[int] = []
 
 
 func _ready() -> void:
+	GridManager.placement_enabled = true   # unit suite tests the grid without a job
+	ApiClient.base_url = "http://127.0.0.1:9"   # keep the unit suite offline
 	SignalBus.pipe_placed.connect(_on_pipe_placed)
 	SignalBus.pipe_rejected.connect(_on_pipe_rejected)
 	SignalBus.intent_touch_public_network.connect(_on_siss_touch)
