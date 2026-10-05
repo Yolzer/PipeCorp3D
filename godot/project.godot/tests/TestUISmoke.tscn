@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://boy1cf1u4kn1g"]
+
+[ext_resource type="Script" uid="uid://dqmx0fpvjitpn" path="res://tests/test_ui_smoke.gd" id="1"]
+
+[node name="TestUISmoke" type="Node3D" unique_id=1896977976]
+script = ExtResource("1")

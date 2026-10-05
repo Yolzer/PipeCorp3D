@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://lsqvx7vkyy1n"]
 
+[ext_resource type="Script" uid="uid://bsjhtb8rxfbyl" path="res://UI/game_over_screen.gd" id="1_xksvs"]
+
 [node name="GameOverScreen" type="CanvasLayer" unique_id=1806356984]
+script = ExtResource("1_xksvs")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1168197879]
 anchors_preset = 15
