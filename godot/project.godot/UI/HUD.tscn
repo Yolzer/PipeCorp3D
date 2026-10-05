@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://de20q2wrre67f"]
+
+[ext_resource type="Script" uid="uid://ip8e0lbtotms" path="res://UI/HUD.gd" id="1_yixhe"]
+
+[node name="Hud" type="CanvasLayer" unique_id=1090118138]
+script = ExtResource("1_yixhe")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1289320303]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer" unique_id=1597560041]
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="MarginContainer/TopBar" unique_id=895351597]
+layout_mode = 2
+
+[node name="XPLabel" type="Label" parent="MarginContainer/TopBar" unique_id=694266857]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="MarginContainer/TopBar" unique_id=2121323075]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=110156706]
+
+[node name="ToastLabel" type="Label" parent="AnimationPlayer" unique_id=7619968]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.8768267, 0, 0.044636287, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JobTimer" type="Timer" parent="AnimationPlayer" unique_id=2137334371]
+
+[node name="FinishJobBtn" type="Button" parent="." unique_id=880007524]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_right = 194.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "Abrir el Agua / Terminar"
