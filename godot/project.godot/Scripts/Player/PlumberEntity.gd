@@ -1,5 +1,9 @@
 class_name PlumberEntity
 extends CharacterBody3D
+## The plumber's BODY: pure simulation, zero input reading.
+## It is "possessed" by a PlayerController (local keyboard/mouse today, a network
+## peer tomorrow) that writes intents: move_intent, apply_look(), request_interact().
+## Required children: Camera3D (named "Camera3D") > RayCast3D (named "RayCast3D").
 
 @export var player_id: StringName = &"Player_1"
 @export var move_speed: float = 4.5
@@ -14,6 +18,12 @@ var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 
 
 @onready var camera: Camera3D = $Camera3D
 @onready var raycast: RayCast3D = $Camera3D/RayCast3D
+
+const GROUP: StringName = &"plumber_entities"
+
+
+func _ready() -> void:
+	add_to_group(GROUP)   # lets SaveService find the body without a hard reference
 
 
 func apply_look(yaw_delta: float, pitch_delta: float) -> void:
