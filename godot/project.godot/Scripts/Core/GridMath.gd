@@ -1,7 +1,7 @@
 class_name GridMath
 extends RefCounted
 ## Pure, stateless grid math. Deterministic: the same world position always
-## maps to the same integer cell on every machine (safe to send over a network).
+## maps to the same integer cell on every machine (safe to send over a network
 
 const CELL_SIZE: float = 1.0
 
