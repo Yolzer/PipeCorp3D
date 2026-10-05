@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://r7wonsysw6fc"]
+
+[ext_resource type="Script" uid="uid://mwxxepqywdkf" path="res://Globals/NetworkManager.gd" id="1_sb185"]
+
+[node name="NetworkManager" type="Node" unique_id=1307995314]
+script = ExtResource("1_sb185")
+
+[node name="PipeRequest" type="HTTPRequest" parent="." unique_id=639099363]

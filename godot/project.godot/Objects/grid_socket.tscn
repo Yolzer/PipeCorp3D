@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b3b7naqdnif8o"]
+
+[ext_resource type="Script" uid="uid://c220jvk8kgsdh" path="res://Objects/grid_socket.gd" id="1_clm6p"]
+[ext_resource type="ArrayMesh" uid="uid://cr38yn8otva87" path="res://pipe_straight.res" id="2_q8l0a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5qc45"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qc45"]
+albedo_color = Color(0.23529412, 0.38039216, 1, 1)
+
+[node name="GridSocket" type="Area3D" unique_id=543014407]
+script = ExtResource("1_clm6p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1071465857]
+shape = SubResource("BoxShape3D_5qc45")
+
+[node name="VisualSocket" type="CSGBox3D" parent="." unique_id=1119414850]
+visible = false
+size = Vector3(0.4, 0.4, 0.4)
+material = SubResource("StandardMaterial3D_5qc45")
+
+[node name="RealPipeMesh" type="MeshInstance3D" parent="." unique_id=295330160]
+mesh = ExtResource("2_q8l0a")
