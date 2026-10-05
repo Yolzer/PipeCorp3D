@@ -7,6 +7,10 @@ extends Node
 const REASON_UNKNOWN_SOCKET: StringName = &"unknown_socket"
 const REASON_OCCUPIED: StringName = &"occupied"
 const REASON_INVALID_ITEM: StringName = &"invalid_item"
+const REASON_NO_ACTIVE_JOB: StringName = &"no_active_job"
+
+## Set by JobSession: pipes can only be installed while a job is in progress.
+var placement_enabled: bool = true
 
 var _sockets: Dictionary[StringName, GridSocket] = {}
 var _cells: Dictionary[Vector3i, StringName] = {}
@@ -59,9 +63,34 @@ func occupied_count() -> int:
 	return total
 
 
+func occupied_sockets() -> Array[GridSocket]:
+	var result: Array[GridSocket] = []
+	for socket: GridSocket in _sockets.values():
+		if socket.is_occupied:
+			result.append(socket)
+	return result
+
+
+## Frees every socket (new job). Not an intent: only JobSession/SaveService call it.
+func clear_occupancy() -> void:
+	for socket: GridSocket in _sockets.values():
+		if socket.is_occupied:
+			socket.vacate()
+
+
+## Re-applies a saved placement without emitting pipe_placed (used by SaveService).
+func restore_placement(socket_id: StringName, item_code: StringName) -> bool:
+	if not _sockets.has(socket_id) or not ItemCodes.is_placeable(item_code):
+		return false
+	_sockets[socket_id].occupy(item_code, false)
+	return true
+
+
 # ---------- Authority ----------
-## Returns &"" when the placement is legal, otherwise a rejection reason.
+## Returns &"" when the placement is legal, otherwise a rejection reason
 func validate_placement(socket_id: StringName, item_code: StringName) -> StringName:
+	if not placement_enabled:
+		return REASON_NO_ACTIVE_JOB
 	if not _sockets.has(socket_id):
 		return REASON_UNKNOWN_SOCKET
 	if not ItemCodes.is_placeable(item_code):
