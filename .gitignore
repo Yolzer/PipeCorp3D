@@ -21,4 +21,7 @@ godot/.godot/
 backend/node_modules/
 backend/dist/
 .env
+*.pem**/.godot/
+node_modules/
 *.pem
+*.tmp
