@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://bhmkcbui0w3ve"
-SignalBus="*uid://waoyf80bio2d"
+SignalBus="*uid://de71ej50asc0e"
 NetworkManager="*uid://r7wonsysw6fc"
+GridManager="*uid://cehpa6i4svpjx"
 
 [debug]
 

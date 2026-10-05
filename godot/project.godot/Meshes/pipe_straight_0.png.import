@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0kjwge6w6ty7"
-path.s3tc="res://.godot/imported/pipe_straight_0.png-97882027692ebc5f3911bd7283db7355.s3tc.ctex"
+path.s3tc="res://.godot/imported/pipe_straight_0.png-610a8e34be568f43c6d820b182279167.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Objects/pipe_straight_0.png"
-dest_files=["res://.godot/imported/pipe_straight_0.png-97882027692ebc5f3911bd7283db7355.s3tc.ctex"]
+source_file="res://Meshes/pipe_straight_0.png"
+dest_files=["res://.godot/imported/pipe_straight_0.png-610a8e34be568f43c6d820b182279167.s3tc.ctex"]
 
 [params]
 
