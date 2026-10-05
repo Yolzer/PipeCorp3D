@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bk0vw1mrapfg1"]
 
+[ext_resource type="Script" uid="uid://dpes84762yxx4" path="res://UI/job_result_screen.gd" id="1_qyx7h"]
+
 [node name="JobResultScreen" type="CanvasLayer" unique_id=2121165979]
+script = ExtResource("1_qyx7h")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1585245676]
 anchors_preset = 15
