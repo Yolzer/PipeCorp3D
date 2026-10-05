@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://brlkovc6e87q5"
-path="res://.godot/imported/pipe_straight.glb-9005ed2b46d89787adc3418661106865.scn"
+path="res://.godot/imported/pipe_straight.glb-fe6b3a91034a26ea0180a9d1ba6ce510.scn"
 
 [deps]
 
-source_file="res://Objects/pipe_straight.glb"
-dest_files=["res://.godot/imported/pipe_straight.glb-9005ed2b46d89787adc3418661106865.scn"]
+source_file="res://Meshes/pipe_straight.glb"
+dest_files=["res://.godot/imported/pipe_straight.glb-fe6b3a91034a26ea0180a9d1ba6ce510.scn"]
 
 [params]
 
@@ -47,7 +47,7 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://pipe_straight.res",
+"save_to_file/fallback_path": "res://Meshes/pipe_straight.res",
 "save_to_file/path": "uid://lsiwb3fkjrqv"
 }
 }
