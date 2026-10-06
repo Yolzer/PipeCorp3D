@@ -165,6 +165,6 @@ func _run() -> void:
 
 	# I11 API down -> friendly NET error, no crash
 	_errors.clear()
-	ApiClient.base_url = "http://127.0.0.1:9"
+	ApiClient.base_url = "http://127.0.0.1:59999"
 	SignalBus.intent_refresh_tickets.emit()
 	_check(await _until(func() -> bool: return _errors.has("NET")), "I11 API offline -> api_error NET")

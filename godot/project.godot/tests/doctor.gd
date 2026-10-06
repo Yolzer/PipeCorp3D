@@ -158,18 +158,30 @@ func _check_signals() -> void:
 		_ok("all %d contract signals present" % REQUIRED_SIGNALS.size())
 
 
+## Godot 4.4+ stores the main scene as "uid://..." in project.godot: resolve it to a res:// path.
+func _main_scene_path() -> String:
+	var main: String = ProjectSettings.get_setting("application/run/main_scene", "")
+	if main.begins_with("uid://"):
+		var id: int = ResourceUID.text_to_id(main)
+		if ResourceUID.has_id(id):
+			return ResourceUID.get_id_path(id)
+	return main
+
+
 func _check_main_scene() -> void:
 	print("\n[6] Main scene:")
-	var main: String = ProjectSettings.get_setting("application/run/main_scene", "")
-	if main.to_lower().contains("world"):
+	var main: String = _main_scene_path()
+	if main.get_file().to_lower() == "world.tscn":
 		_ok("main scene = " + main)
+	elif main == "":
+		_bad("no main scene set → Project Settings → Application → Run → Main Scene = World.tscn")
 	else:
 		_bad("main scene is '%s' → set it to World.tscn (Project Settings → Application → Run)" % main)
 
 
 func _check_world_wiring() -> void:
 	print("\n[7] World.tscn wiring (is the RIGHT script attached to each instance? do the node paths exist?):")
-	var main: String = ProjectSettings.get_setting("application/run/main_scene", "")
+	var main: String = _main_scene_path()
 	var packed: PackedScene = load(main) as PackedScene
 	if packed == null:
 		_bad("cannot load main scene " + main)
@@ -181,7 +193,9 @@ func _check_world_wiring() -> void:
 		var paths: Array = spec[1]
 		var node: Node = world.find_child(node_name, true, false)
 		if node == null:
-			_bad("World has no node named '%s' (rename the instance exactly like that)" % node_name)
+			node = _find_by_class(world, expected)
+		if node == null:
+			_bad("World has no '%s' node (no node with that name or with class %s)" % [node_name, expected])
 			continue
 		var origin: String = node.scene_file_path if node.scene_file_path != "" else "World.tscn"
 		var script: Script = node.get_script() as Script
@@ -197,7 +211,8 @@ func _check_world_wiring() -> void:
 			var options: PackedStringArray = String(p).split("|")
 			var found: bool = false
 			for option: String in options:
-				if node.has_node(NodePath(option)):
+				# exact path first, then the node NAME anywhere inside (layout can change freely)
+				if node.has_node(NodePath(option)) or node.find_child(option.get_file(), true, false) != null:
 					found = true
 			if not found:
 				missing.append(String(p))
@@ -208,3 +223,12 @@ func _check_world_wiring() -> void:
 		if node_name == "PlayerController" and node.get("entity") == null:
 			_bad("PlayerController.Entity is EMPTY → select PlayerController, Inspector → Entity → assign PlumberEntity")
 	world.free()
+
+
+## Returns the first node whose attached script declares class_name `cls` (instance was renamed).
+func _find_by_class(root: Node, cls: String) -> Node:
+	for n: Node in root.find_children("*", "", true, false):
+		var sc: Script = n.get_script() as Script
+		if sc != null and sc.get_global_name() == cls:
+			return n
+	return null

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b3b7naqdnif8o" path="res://Objects/grid_socket.tscn" id="1_bah7m"]
 [ext_resource type="Texture2D" uid="uid://dshmeh1v7lkrk" path="res://Meshes/Floor texture.jpg" id="1_kva58"]
-[ext_resource type="ArrayMesh" uid="uid://qg2nrfg61ck5" path="res://Props/LowPolyHouse.res" id="2_b2ar6"]
+[ext_resource type="ArrayMesh" uid="uid://ceiccq6u0qakv" path="res://Props/LowPolyHouse.res" id="2_b2ar6"]
 [ext_resource type="Texture2D" uid="uid://dphi3wwbwsr7q" path="res://Meshes/wall texture.jpg" id="2_f5c0m"]
 [ext_resource type="PackedScene" uid="uid://mvkdj5g3mtrj" path="res://Entities/PlumberEntity.tscn" id="2_fv4w7"]
 [ext_resource type="Script" uid="uid://tvvgd68dkufx" path="res://Scripts/world/SissZone.gd" id="3_fv4w7"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bk0vw1mrapfg1" path="res://UI/JobResultScreen.tscn" id="6_b2ar6"]
 [ext_resource type="PackedScene" uid="uid://lsqvx7vkyy1n" path="res://UI/GameOverScreen.tscn" id="7_ee7l0"]
 [ext_resource type="PackedScene" uid="uid://dmp6l3wiwq5ek" path="res://UI/main_menu.tscn" id="8_gn8l5"]
+[ext_resource type="PackedScene" uid="uid://dq8m7sp7avdnn" path="res://UI/PauseMenu.tscn" id="12_ee7l0"]
 [ext_resource type="AudioStream" uid="uid://ckgsu62pkubur" path="res://Sounds/Pixel Breeze.mp3" id="13_ee7l0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b2ar6"]
@@ -136,6 +137,9 @@ visible = false
 visible = false
 
 [node name="GameOverScreen" parent="." unique_id=1806356984 instance=ExtResource("7_ee7l0")]
+visible = false
+
+[node name="PauseMenu" parent="." unique_id=128048897 instance=ExtResource("12_ee7l0")]
 visible = false
 
 [node name="MainMenu" parent="." unique_id=1105895617 instance=ExtResource("8_gn8l5")]
