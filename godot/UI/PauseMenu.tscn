@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dq8m7sp7avdnn"]
+
+[ext_resource type="Script" uid="uid://b1idyp83rxwxx" path="res://UI/pause_menu.gd" id="1_05bun"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=128048897]
+script = ExtResource("1_05bun")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1893638817]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5921569)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1597438149]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1789712594]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer" unique_id=532832053]
+layout_mode = 2
+
+[node name="PAUSA" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=292954897]
+layout_mode = 2
+text = "PAUSA"
+
+[node name="ResumeBtn" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=723622644]
+layout_mode = 2
+text = "Reanudar"
+
+[node name="QuitBtn" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1133712941]
+layout_mode = 2
+text = "Salir del juego"
