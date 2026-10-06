@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://mvkdj5g3mtrj"]
 
 [ext_resource type="Script" uid="uid://36d5pvf4nwvm" path="res://Scripts/Player/PlumberEntity.gd" id="1_6a5os"]
+[ext_resource type="PackedScene" uid="uid://c1gjiov2vbekq" path="res://Models/Industrial Worker.glb" id="2_yy3eu"]
+[ext_resource type="Script" uid="uid://yb1bqcauhbqf" path="res://Models/animation_controller.gd" id="3_iiyyi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qc45"]
 
@@ -11,6 +13,10 @@ player_id = null
 move_speed = null
 acceleration = null
 pitch_limit_deg = null
+
+[node name="Industrial Worker" parent="." unique_id=13263547 instance=ExtResource("2_yy3eu")]
+transform = Transform3D(-0.999935, 0, -0.011406326, 0, 1, 0, 0.011406326, 0, -0.999935, 0, -0.88148165, 0.23905009)
+script = ExtResource("3_iiyyi")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1639801268]
 shape = SubResource("CapsuleShape3D_5qc45")
