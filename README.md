@@ -13,7 +13,7 @@
 <br>
 ![Tests](https://img.shields.io/badge/tests-127_passing-2ea44f?style=flat-square)
 ![Typecheck](https://img.shields.io/badge/typecheck-0_errors-2ea44f?style=flat-square)
-![Release](https://img.shields.io/badge/release-v1.0.1-blue?style=flat-square)
+![Release](https://img.shields.io/badge/release-v1.0.2-blue?style=flat-square)
 ![Scrum](https://img.shields.io/badge/Scrum-3_sprints_·_63_pts-orange?style=flat-square)
 
 [Descripción](#-descripción) ·
@@ -226,7 +226,7 @@ Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog deriva
 | Sprint 3 | 5 oct 2026 | 21 + 5 pts | 26 pts |
 | **Total** | | | **63 pts · 18 historias** |
 
-- **GitFlow:** cada tarjeta de Trello en una rama `feature/*`, integrada a `develop` con `--no-ff`; releases etiquetadas en `main` (`v1.0.0-mvp`, `v1.0.1`).
+- **GitFlow:** cada tarjeta de Trello en una rama `feature/*`, integrada a `develop` con `--no-ff`; releases etiquetadas en `main` (`v1.0.0-mvp`, `v1.0.1`, `v1.0.2`).
 - **Definition of Done:** código auditado, tipado estricto sin advertencias, suites al 100%, secretos fuera del repositorio y evidencia adjunta en Trello.
 - **Trazabilidad:** 17 ajustes justificados respecto de la Fase 1, documentados en el portafolio.
 
@@ -234,6 +234,7 @@ Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog deriva
 
 | Versión | Contenido |
 |---|---|
+| `v1.0.2` | README profesional del repositorio |
 | `v1.0.1` | Menú de pausa (`P`), correcciones del Doctor y de la API simulada, proyecto Godot movido a la raíz de `godot/` |
 | `v1.0.0-mvp` | MVP jugable de punta a punta: 18 historias, 63 puntos |
 
