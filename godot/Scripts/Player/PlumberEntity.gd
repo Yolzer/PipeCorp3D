@@ -12,7 +12,8 @@ extends CharacterBody3D
 
 ## Same convention as Input.get_vector(): x = strafe (+right), y = forward (-) / back (+).
 var move_intent: Vector2 = Vector2.ZERO
-var selected_item: StringName = ItemCodes.PVC_90_DEG
+var selected_item: StringName = ItemCodes.HOTBAR_SLOTS[0]
+var hotbar_slot: int = 0
 
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 
@@ -31,6 +32,13 @@ func apply_look(yaw_delta: float, pitch_delta: float) -> void:
 	camera.rotate_x(pitch_delta)
 	var limit: float = deg_to_rad(pitch_limit_deg)
 	camera.rotation.x = clampf(camera.rotation.x, -limit, limit)
+
+
+## Intent from the controller: equip hotbar slot [index] (wraps around, e.g. mouse wheel).
+func select_slot(index: int) -> void:
+	hotbar_slot = posmod(index, ItemCodes.HOTBAR_SLOTS.size())
+	selected_item = ItemCodes.HOTBAR_SLOTS[hotbar_slot]
+	SignalBus.hotbar_changed.emit(player_id, hotbar_slot, selected_item)
 
 
 ## Asks the authority to act on whatever the ray is aiming at. Never mutates the world itself.
