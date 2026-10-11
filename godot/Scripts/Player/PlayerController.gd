@@ -40,6 +40,7 @@ func possess(target: PlumberEntity) -> void:
 		entity.camera.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	SignalBus.control_switched.emit(entity.player_id)
+	entity.select_slot(entity.hotbar_slot)   # the HUD hotbar shows THIS plumber's tool
 
 
 ## All plumbers in the scene, sorted by player_id (Player_1, Player_2...).
@@ -83,10 +84,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		entity.apply_look(-motion.relative.x * mouse_sensitivity, -motion.relative.y * mouse_sensitivity)
 	elif event.is_action_pressed(&"interact"):
 		entity.request_interact()
+	elif event is InputEventMouseButton and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		var wheel: InputEventMouseButton = event as InputEventMouseButton
+		if wheel.pressed and wheel.button_index == MOUSE_BUTTON_WHEEL_UP:
+			entity.select_slot(entity.hotbar_slot - 1)
+		elif wheel.pressed and wheel.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			entity.select_slot(entity.hotbar_slot + 1)
 	elif event is InputEventKey:
 		var key: InputEventKey = event as InputEventKey
 		if key.pressed and not key.echo and key.physical_keycode == KEY_C:
 			switch_to_next()
+		elif key.pressed and not key.echo and key.physical_keycode in [KEY_1, KEY_2]:
+			entity.select_slot(1 if key.physical_keycode == KEY_2 else 0)   # [1] / [2] hotbar
 
 
 func _physics_process(_delta: float) -> void:

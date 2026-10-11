@@ -15,6 +15,8 @@ extends CanvasLayer
 
 var current_job_seconds: int = 0
 var _hint_label: Label = null
+var hotbar: Hotbar = null
+var _equipped: Dictionary[StringName, StringName] = {}   # player_id -> pieza equipada
 
 
 func _ready() -> void:
@@ -25,8 +27,10 @@ func _ready() -> void:
 	job_timer.timeout.connect(_on_timer_tick)
 	finish_job_btn.pressed.connect(_emit_finish)
 	finish_job_btn.hide()
+	hotbar = Hotbar.new()   # v1.0.5: 2 espacios, [1]/[2] o rueda del mouse
+	add_child(hotbar)
 	_hint_label = Label.new()
-	_hint_label.text = "   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse"
+	_hint_label.text = "   [1][2] Pieza   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar   [Esc] Mouse"
 	$MarginContainer/TopBar.add_child(_hint_label)
 	timer_label.text = "Sin trabajo activo"
 	SignalBus.profile_updated.connect(_on_profile_updated)
@@ -36,6 +40,7 @@ func _ready() -> void:
 	SignalBus.pipe_rejected.connect(_on_pipe_rejected)
 	SignalBus.api_error.connect(_on_api_error)
 	SignalBus.control_switched.connect(_on_control_switched)
+	SignalBus.hotbar_changed.connect(_on_hotbar_changed)
 
 
 ## Labels/containers must never eat mouse clicks meant for the 3D world or other menus.
@@ -114,7 +119,15 @@ func _on_pipe_rejected(_player_id: StringName, _socket_id: StringName, reason: S
 
 func _on_control_switched(player_id: StringName) -> void:
 	_show_toast("Controlando: %s" % player_id)
-	_hint_label.text = "   [%s]   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse" % player_id
+	_hint_label.text = "   [%s]   [1][2] Pieza   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar   [Esc] Mouse" % player_id
+
+
+## Aviso solo cuando ESE gasfíter cambia de pieza (no al tomar el control).
+func _on_hotbar_changed(player_id: StringName, _slot: int, item_code: StringName) -> void:
+	var previous: StringName = _equipped.get(player_id, item_code)
+	_equipped[player_id] = item_code
+	if previous != item_code:
+		_show_toast("Pieza: %s" % ShopCatalog.item_name(item_code))
 
 
 func _on_api_error(_code: String, message: String) -> void:

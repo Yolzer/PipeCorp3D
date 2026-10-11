@@ -39,6 +39,7 @@ signal job_graded(result: JobResult)
 signal game_over(reason: StringName)
 signal api_error(code: String, message: String)
 signal control_switched(player_id: StringName)
+signal hotbar_changed(player_id: StringName, slot: int, item_code: StringName)   # v1.0.5
 signal inventory_updated(stock: Dictionary[StringName, int])   # item_code -> cantidad
 signal purchase_succeeded(item_code: StringName, quantity: int)
 signal vehicle_upgraded(tier_id: int)
