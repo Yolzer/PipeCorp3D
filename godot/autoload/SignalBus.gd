@@ -23,6 +23,8 @@ signal intent_derive_ticket(ticket_id: int)
 signal intent_finish_job()
 signal intent_purchase(item_code: StringName, quantity: int)
 signal intent_upgrade_vehicle(tier_id: int)
+signal intent_refresh_inventory()               # Tienda: pide GET /inventory
+signal intent_open_shop()                       # [B] o botón "Tienda" del teléfono
 signal intent_end_day()
 signal intent_new_career()                    # Game Over screen: start a fresh career
 signal intent_switch_plumber()                 # [C]: cycle local control between plumbers
@@ -37,6 +39,9 @@ signal job_graded(result: JobResult)
 signal game_over(reason: StringName)
 signal api_error(code: String, message: String)
 signal control_switched(player_id: StringName)
+signal inventory_updated(stock: Dictionary[StringName, int])   # item_code -> cantidad
+signal purchase_succeeded(item_code: StringName, quantity: int)
+signal vehicle_upgraded(tier_id: int)
 
 # --- World & economy ---
 signal water_main_shut_off(house_id: StringName)

@@ -20,6 +20,7 @@ func _ready() -> void:
 	if not (get_parent() is CanvasLayer):
 		_lift_to_layer.call_deferred()
 	refresh_btn.pressed.connect(_on_refresh_pressed)
+	_add_shop_button()
 	close_btn.pressed.connect(close_phone)
 	SignalBus.tickets_updated.connect(_on_tickets_updated)
 	SignalBus.login_succeeded.connect(func(_p: PlayerProfile) -> void:
@@ -28,6 +29,19 @@ func _ready() -> void:
 	SignalBus.game_over.connect(func(_r: StringName) -> void:
 		_game_over = true
 		hide())
+
+
+## v1.0.4: botón "Tienda" bajo "Actualizar Red" (creado por código, sin tocar el .tscn).
+func _add_shop_button() -> void:
+	var shop_btn: Button = Button.new()
+	shop_btn.name = "ShopBtn"
+	shop_btn.text = "Tienda  [B]"
+	shop_btn.add_theme_font_size_override("font_size", 12)
+	refresh_btn.get_parent().add_child(shop_btn)
+	refresh_btn.get_parent().move_child(shop_btn, refresh_btn.get_index() + 1)
+	shop_btn.pressed.connect(func() -> void:
+		close_phone()
+		SignalBus.intent_open_shop.emit())
 
 
 func _lift_to_layer() -> void:
