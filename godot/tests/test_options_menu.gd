@@ -47,7 +47,7 @@ func _test_main_menu() -> void:
 	(options.find_child("BackBtn", true, false) as Button).pressed.emit()
 	_check(not options.is_open(), "O08 Volver closes the options menu")
 	var version_label: Label = main_menu.get_node_or_null(^"VersionLabel") as Label
-	_check(version_label != null and version_label.text.contains("1.0.3"), "O09 version label shows v1.0.3")
+	_check(version_label != null and version_label.text.contains(str(ProjectSettings.get_setting("application/config/version"))), "O09 version label shows the project version")
 	menu.queue_free()
 	await get_tree().process_frame
 

@@ -10,6 +10,7 @@ const TIMEOUT_SECONDS: float = 8.0
 var base_url: String = DEFAULT_BASE_URL
 var profile: PlayerProfile = null
 var tickets: Array[TicketData] = []
+var inventory: Dictionary[StringName, int] = {}
 
 var _token: String = ""
 var _base_user: String = ""
@@ -51,6 +52,7 @@ func _ready() -> void:
 	SignalBus.intent_touch_public_network.connect(_on_touch_public_network)
 	SignalBus.intent_purchase.connect(_on_purchase)
 	SignalBus.intent_upgrade_vehicle.connect(_on_upgrade_vehicle)
+	SignalBus.intent_refresh_inventory.connect(refresh_inventory)
 	SignalBus.intent_end_day.connect(_on_end_day)
 	SignalBus.job_completed.connect(_on_job_completed)
 	SignalBus.intent_new_career.connect(_on_new_career)
@@ -274,6 +276,23 @@ func _on_end_day() -> void:
 	_apply_profile(JsonUtil.get_dict(res.body, "profile"))
 
 
+## GET /inventory -> inventory_updated (lo usa la Tienda para mostrar la bodega del vehículo).
+func refresh_inventory() -> void:
+	if not is_logged_in():
+		return
+	var res: ApiResponse = await _request(HTTPClient.METHOD_GET, "/inventory")
+	if not res.ok:
+		await _fail(res)
+		return
+	var stock: Dictionary[StringName, int] = {}
+	for item: Variant in JsonUtil.get_array(res.body, "items"):
+		if item is Dictionary:
+			var d: Dictionary = item
+			stock[StringName(JsonUtil.get_string(d, "itemCode"))] = JsonUtil.get_int(d, "quantity")
+	inventory = stock
+	SignalBus.inventory_updated.emit(inventory)
+
+
 func _on_purchase(item_code: StringName, quantity: int) -> void:
 	var res: ApiResponse = await _request(HTTPClient.METHOD_POST, "/inventory/purchase",
 		{"itemCode": String(item_code), "quantity": quantity})
@@ -281,6 +300,8 @@ func _on_purchase(item_code: StringName, quantity: int) -> void:
 		await _fail(res)
 		return
 	_apply_profile(JsonUtil.get_dict(res.body, "profile"))
+	SignalBus.purchase_succeeded.emit(item_code, quantity)
+	await refresh_inventory()
 
 
 func _on_upgrade_vehicle(tier_id: int) -> void:
@@ -289,3 +310,4 @@ func _on_upgrade_vehicle(tier_id: int) -> void:
 		await _fail(res)
 		return
 	_apply_profile(JsonUtil.get_dict(res.body, "profile"))
+	SignalBus.vehicle_upgraded.emit(tier_id)

@@ -26,7 +26,7 @@ func _ready() -> void:
 	finish_job_btn.pressed.connect(_emit_finish)
 	finish_job_btn.hide()
 	_hint_label = Label.new()
-	_hint_label.text = "   [T] Teléfono   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse"
+	_hint_label.text = "   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse"
 	$MarginContainer/TopBar.add_child(_hint_label)
 	timer_label.text = "Sin trabajo activo"
 	SignalBus.profile_updated.connect(_on_profile_updated)
@@ -114,7 +114,7 @@ func _on_pipe_rejected(_player_id: StringName, _socket_id: StringName, reason: S
 
 func _on_control_switched(player_id: StringName) -> void:
 	_show_toast("Controlando: %s" % player_id)
-	_hint_label.text = "   [%s]   [T] Teléfono   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse" % player_id
+	_hint_label.text = "   [%s]   [T] Teléfono   [B] Tienda   [F] Terminar   [C] Cambiar gasfíter   [Esc] Mouse" % player_id
 
 
 func _on_api_error(_code: String, message: String) -> void:
