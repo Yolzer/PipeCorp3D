@@ -11,9 +11,9 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 <br>
-![Tests](https://img.shields.io/badge/tests-154_passing-2ea44f?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-170_passing-2ea44f?style=flat-square)
 ![Typecheck](https://img.shields.io/badge/typecheck-0_errors-2ea44f?style=flat-square)
-![Release](https://img.shields.io/badge/release-v1.0.4-blue?style=flat-square)
+![Release](https://img.shields.io/badge/release-v1.0.5-blue?style=flat-square)
 ![Scrum](https://img.shields.io/badge/Scrum-3_sprints_·_63_pts-orange?style=flat-square)
 
 [Descripción](#-descripción) ·
@@ -158,6 +158,7 @@ Verifica que la API responde en <http://localhost:3000/health>.
 |---|---|
 | `W` `A` `S` `D` + mouse | Moverse y mirar |
 | `Clic` | Instalar una tubería en el socket apuntado |
+| `1` `2` / rueda | Cambiar la pieza de la hotbar (codo 90° / tubo recto) |
 | `T` | Abrir el teléfono (tablero de tickets) |
 | `B` | Abrir la Tienda (materiales y vehículos) |
 | `F` | Terminar el trabajo en curso |
@@ -170,7 +171,7 @@ Verifica que la API responde en <http://localhost:3000/health>.
 
 ## 🧪 Pruebas
 
-**154 pruebas automatizadas aprobadas · 0 errores de typecheck.** Ninguna tarjeta pasa a *Done* sin su suite en verde y evidencia adjunta.
+**170 pruebas automatizadas aprobadas · 0 errores de typecheck.** Ninguna tarjeta pasa a *Done* sin su suite en verde y evidencia adjunta.
 
 | Suite | Herramienta | Resultado |
 |---|---|---|
@@ -185,6 +186,7 @@ Verifica que la API responde en <http://localhost:3000/health>.
 | Godot: zona SISS | Escena headless | 3/3 |
 | Godot: menú de Opciones | Escena headless | 11/11 |
 | Godot: Tienda y vehículos | Escena headless + API simulada | 16/16 |
+| Godot: Hotbar y teléfono | Escena headless | 16/16 |
 
 ### Cómo ejecutarlas
 
@@ -237,6 +239,7 @@ Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog deriva
 
 | Versión | Contenido |
 |---|---|
+| `v1.0.5` | Hotbar de 2 espacios ([1]/[2]/rueda) y rediseño del teléfono, prueba nueva (16/16) |
 | `v1.0.4` | Tienda de materiales y mejora de vehículos ([B] o botón del teléfono), prueba nueva de la Tienda (16/16) |
 | `v1.0.3` | Menú de Opciones (visual) en el menú principal y en la pausa, etiqueta de versión, prueba nueva de Opciones (11/11) |
 | `v1.0.2` | README profesional del repositorio |
@@ -249,7 +252,7 @@ Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog deriva
 
 Diferido a **v1.1**, con su justificación documentada:
 
-- [ ] Hotbar de 2 espacios con herramientas de rango F–S
+- [x] Hotbar de 2 espacios *(v1.0.5; rango F visible, la progresión F–S queda para v1.1)*
 - [ ] Sellado con llave y partículas de fuga
 - [x] Interfaz de tienda y mejora de vehículos *(v1.0.4)*
 - [ ] Contratos desbloqueados por XP
