@@ -6,7 +6,7 @@ extends Node
 const REQUIRED_CLASSES: PackedStringArray = [
 	"PlayerProfile", "TicketData", "JobResult", "JsonUtil", "GridMath", "ItemCodes",
 	"GridSocket", "SissZone", "PlumberEntity", "PlayerController",
-	"MainMenu", "HUD", "VirtualPhone", "JobResultScreen", "GameOverScreen", "OptionsMenu",
+	"MainMenu", "HUD", "VirtualPhone", "JobResultScreen", "GameOverScreen", "OptionsMenu", "ShopMenu",
 ]
 const REQUIRED_AUTOLOADS: PackedStringArray = ["SignalBus", "GridManager", "ApiClient", "JobSession", "SaveService"]
 const FORBIDDEN_AUTOLOADS: PackedStringArray = ["GameManager", "NetworkManager"]
@@ -20,6 +20,7 @@ const WORLD_NODES: Dictionary = {
 		"PanelContainer/VBox/XPLabel", "PanelContainer/VBox/CloseBtn"]],
 	"GameOverScreen": ["GameOverScreen", ["ColorRect/VBoxContainer/ReasonLabel", "ColorRect/VBoxContainer/QuitBtn"]],
 	"PlayerController": ["PlayerController", []],
+	"ShopMenu": ["ShopMenu", []],
 	"PlumberEntity": ["PlumberEntity", ["Camera3D", "Camera3D/RayCast3D"]],
 }
 const REQUIRED_SIGNALS: PackedStringArray = [

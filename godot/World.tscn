@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dmp6l3wiwq5ek" path="res://UI/main_menu.tscn" id="8_gn8l5"]
 [ext_resource type="PackedScene" uid="uid://dq8m7sp7avdnn" path="res://UI/PauseMenu.tscn" id="12_ee7l0"]
 [ext_resource type="AudioStream" uid="uid://ckgsu62pkubur" path="res://Sounds/Pixel Breeze.mp3" id="13_ee7l0"]
+[ext_resource type="Script" uid="uid://cbmayn26gxia4" path="res://UI/shop_menu.gd" id="14_shop1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b2ar6"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -141,6 +142,9 @@ visible = false
 
 [node name="PauseMenu" parent="." unique_id=128048897 instance=ExtResource("12_ee7l0")]
 visible = false
+
+[node name="ShopMenu" type="CanvasLayer" parent="." unique_id=1417733601]
+script = ExtResource("14_shop1")
 
 [node name="MainMenu" parent="." unique_id=1105895617 instance=ExtResource("8_gn8l5")]
 visible = false
