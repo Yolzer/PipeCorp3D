@@ -11,9 +11,9 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 <br>
-![Tests](https://img.shields.io/badge/tests-127_passing-2ea44f?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-138_passing-2ea44f?style=flat-square)
 ![Typecheck](https://img.shields.io/badge/typecheck-0_errors-2ea44f?style=flat-square)
-![Release](https://img.shields.io/badge/release-v1.0.2-blue?style=flat-square)
+![Release](https://img.shields.io/badge/release-v1.0.3-blue?style=flat-square)
 ![Scrum](https://img.shields.io/badge/Scrum-3_sprints_·_63_pts-orange?style=flat-square)
 
 [Descripción](#-descripción) ·
@@ -169,7 +169,7 @@ Verifica que la API responde en <http://localhost:3000/health>.
 
 ## 🧪 Pruebas
 
-**127 pruebas automatizadas aprobadas · 0 errores de typecheck.** Ninguna tarjeta pasa a *Done* sin su suite en verde y evidencia adjunta.
+**138 pruebas automatizadas aprobadas · 0 errores de typecheck.** Ninguna tarjeta pasa a *Done* sin su suite en verde y evidencia adjunta.
 
 | Suite | Herramienta | Resultado |
 |---|---|---|
@@ -182,6 +182,7 @@ Verifica que la API responde en <http://localhost:3000/health>.
 | Godot: integración cliente-servidor y guardado | Escena headless + API simulada | 24/24 |
 | Godot: prueba de humo de UI | Escena headless + API simulada | 22/22 |
 | Godot: zona SISS | Escena headless | 3/3 |
+| Godot: menú de Opciones | Escena headless | 11/11 |
 
 ### Cómo ejecutarlas
 
@@ -234,6 +235,7 @@ Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog deriva
 
 | Versión | Contenido |
 |---|---|
+| `v1.0.3` | Menú de Opciones (visual) en el menú principal y en la pausa, etiqueta de versión, prueba nueva de Opciones (11/11) |
 | `v1.0.2` | README profesional del repositorio |
 | `v1.0.1` | Menú de pausa (`P`), correcciones del Doctor y de la API simulada, proyecto Godot movido a la raíz de `godot/` |
 | `v1.0.0-mvp` | MVP jugable de punta a punta: 18 historias, 63 puntos |
