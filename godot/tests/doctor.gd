@@ -6,7 +6,7 @@ extends Node
 const REQUIRED_CLASSES: PackedStringArray = [
 	"PlayerProfile", "TicketData", "JobResult", "JsonUtil", "GridMath", "ItemCodes",
 	"GridSocket", "SissZone", "PlumberEntity", "PlayerController",
-	"MainMenu", "HUD", "VirtualPhone", "JobResultScreen", "GameOverScreen",
+	"MainMenu", "HUD", "VirtualPhone", "JobResultScreen", "GameOverScreen", "OptionsMenu",
 ]
 const REQUIRED_AUTOLOADS: PackedStringArray = ["SignalBus", "GridManager", "ApiClient", "JobSession", "SaveService"]
 const FORBIDDEN_AUTOLOADS: PackedStringArray = ["GameManager", "NetworkManager"]

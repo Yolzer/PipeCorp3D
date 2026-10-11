@@ -8,6 +8,8 @@ extends CanvasLayer
 @onready var quit_btn: Button = $CenterContainer/PanelContainer/VBoxContainer/QuitBtn
 
 var _mouse_before: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+var _options_btn: Button = null
+var _options: OptionsMenu = null
 
 
 func _ready() -> void:
@@ -16,11 +18,27 @@ func _ready() -> void:
 	visible = false
 	resume_btn.pressed.connect(_resume)
 	quit_btn.pressed.connect(_quit)
+	_add_options_button()
+
+
+## v1.0.3: "Opciones" entre "Reanudar" y "Salir del juego" (creado por código, sin tocar el .tscn).
+func _add_options_button() -> void:
+	_options_btn = Button.new()
+	_options_btn.name = "OptionsBtn"
+	_options_btn.text = "Opciones"
+	resume_btn.get_parent().add_child(_options_btn)
+	resume_btn.get_parent().move_child(_options_btn, quit_btn.get_index())
+	_options = OptionsMenu.new()
+	add_child(_options)
+	_options_btn.pressed.connect(_options.open)
+	_options.closed.connect(func() -> void: _options_btn.grab_focus())
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed(&"pause"):
 		return
+	if _options != null and _options.is_open():
+		return   # con Opciones abierto, [P] no reanuda (primero "Volver" o [Esc])
 	if get_tree().paused:
 		_resume()
 	elif Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

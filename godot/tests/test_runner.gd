@@ -236,7 +236,7 @@ func _test_controller_possession() -> void:
 
 
 func _test_architecture_entity_never_reads_input() -> void:
-	var src: String = FileAccess.get_file_as_string("res://scripts/player/PlumberEntity.gd")
+	var src: String = FileAccess.get_file_as_string("res://Scripts/Player/PlumberEntity.gd")
 	var code_only: PackedStringArray = PackedStringArray()
 	for line: String in src.split("\n"):
 		code_only.append(line.split("#")[0])
