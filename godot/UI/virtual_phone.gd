@@ -17,7 +17,7 @@ var _status_money: Label = null
 
 const PHONE_LAYER: int = 50
 const PHONE_SIZE: Vector2 = Vector2(330, 580)
-const MARGIN_RIGHT: float = 780.0
+const MARGIN_LEFT: float = 42.0   # teléfono a la izquierda (mismo lugar en cualquier resolución)
 
 const COLOR_BODY: Color = Color(0.06, 0.07, 0.1, 0.98)
 const COLOR_BEZEL: Color = Color(0.22, 0.24, 0.3)
@@ -184,16 +184,16 @@ func _apply_phone_style() -> void:
 	var vbox: VBoxContainer = get_node_or_null(^"Panel/VBoxContainer") as VBoxContainer
 	if panel == null or vbox == null:
 		return
-	# Cuerpo del teléfono: anclado a la derecha y centrado en vertical.
+	# Cuerpo del teléfono: anclado a la IZQUIERDA y centrado en vertical.
 	panel.scale = Vector2.ONE   # el .tscn antiguo lo estiraba 1.4 × 1.16 y se salía de la pantalla
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE   # solo el cuerpo del teléfono recibe clics
-	panel.anchor_left = 1.0
-	panel.anchor_right = 1.0
+	panel.anchor_left = 0.0
+	panel.anchor_right = 0.0
 	panel.anchor_top = 0.5
 	panel.anchor_bottom = 0.5
-	panel.offset_left = -PHONE_SIZE.x - MARGIN_RIGHT
-	panel.offset_right = -MARGIN_RIGHT
+	panel.offset_left = MARGIN_LEFT
+	panel.offset_right = MARGIN_LEFT + PHONE_SIZE.x
 	panel.offset_top = -PHONE_SIZE.y / 2.0
 	panel.offset_bottom = PHONE_SIZE.y / 2.0
 	var body: StyleBoxFlat = StyleBoxFlat.new()
