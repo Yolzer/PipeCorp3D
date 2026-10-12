@@ -130,7 +130,6 @@ entity = NodePath("../PlumberEntity")
 metadata/_custom_type_script = "uid://caf1nuvkdt6pg"
 
 [node name="Hud" parent="." unique_id=1090118138 instance=ExtResource("4_kva58")]
-visible = false
 
 [node name="VirtualPhone" parent="." unique_id=243127047 instance=ExtResource("5_f5c0m")]
 

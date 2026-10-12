@@ -16,8 +16,8 @@ var _status_money: Label = null
 
 
 const PHONE_LAYER: int = 50
-const PHONE_SIZE: Vector2 = Vector2(380, 620)
-const MARGIN_RIGHT: float = 28.0
+const PHONE_SIZE: Vector2 = Vector2(330, 580)
+const MARGIN_RIGHT: float = 780.0
 
 const COLOR_BODY: Color = Color(0.06, 0.07, 0.1, 0.98)
 const COLOR_BEZEL: Color = Color(0.22, 0.24, 0.3)
