@@ -11,16 +11,16 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 <br>
+![Release](https://img.shields.io/badge/release-v1.1.0--alpha-blueviolet?style=flat-square)
 ![Tests](https://img.shields.io/badge/tests-170_passing-2ea44f?style=flat-square)
 ![Typecheck](https://img.shields.io/badge/typecheck-0_errors-2ea44f?style=flat-square)
-![Release](https://img.shields.io/badge/release-v1.0.5-blue?style=flat-square)
-![Scrum](https://img.shields.io/badge/Scrum-3_sprints_·_63_pts-orange?style=flat-square)
+![Scrum](https://img.shields.io/badge/Scrum-3_sprints_MVP_+_Alpha-orange?style=flat-square)
 
 [Descripción](#-descripción) ·
+[Novedades](#-novedades-v110-alpha) ·
 [Arquitectura](#️-arquitectura) ·
-[Instalación](#-instalación-y-ejecución) ·
 [Controles](#-controles) ·
-[Pruebas](#-pruebas) ·
+[Calidad](#-calidad) ·
 [Metodología](#-metodología) ·
 [Roadmap](#️-roadmap)
 
@@ -36,11 +36,27 @@ El jugador dirige su propia PYME de gasfitería en primera persona:
 
 1. Recibe trabajos (**tickets**) con temporizador en un teléfono virtual.
 2. Acepta un trabajo y compra los materiales en una sola transacción.
-3. Instala tuberías sobre una **grilla determinista de sockets**.
+3. Instala tuberías sobre una **grilla determinista de sockets**, eligiendo la pieza en la **hotbar**.
 4. Recibe una **nota de S a F** y un pago calculados en el servidor.
-5. Respeta la jurisdicción SISS: **derivar** un problema de la red pública otorga reputación; **intervenirla** genera multa y, ante reincidencia, un **Game Over irreversible**.
+5. Reinvierte en la **Tienda**: materiales y mejores vehículos (más capacidad de bodega).
+6. Respeta la jurisdicción SISS: **derivar** un problema de la red pública otorga reputación; **intervenirla** genera multa y, ante reincidencia, un **Game Over irreversible**.
 
 > **Principio de diseño:** el cliente solo expresa intenciones. Las reglas económicas y legales viven en PostgreSQL, por lo que ninguna capa cliente puede saltárselas.
+
+---
+
+## ✨ Novedades v1.1.0-alpha
+
+> Versión técnica **ALPHA**: muestra el avance del sistema, no es un producto terminado.
+
+| Versión | Módulo | Qué aporta |
+|---|---|---|
+| `v1.0.3` | **Menú de Opciones** | Pestañas Audio, Video, Controles y Juego desde el menú principal y la pausa. *Solo visual en ALPHA.* |
+| `v1.0.4` | **Tienda y vehículos** | Compra de materiales y mejora de vehículo (A pie → Bicicleta → Hatchback → Furgón). Dinero, XP y capacidad validados por PostgreSQL. |
+| `v1.0.5` | **Hotbar y teléfono** | Hotbar de 2 espacios (codo 90° / tubo recto) con rango de herramienta, y teléfono rediseñado con tarjetas por contrato. |
+| `v1.1.0-alpha` | **HUD unificado** | Barra inferior con indicadores (dinero, XP, día, vehículo, tiempo) y teclas visibles, avisos en píldora y botón de término. |
+
+Toda la interfaz comparte un mismo lenguaje visual: paneles oscuros redondeados, acentos por color (azul privado, rojo SISS, verde en curso, dorado selección) y montos en formato CLP (`$25.000`).
 
 ---
 
@@ -51,7 +67,7 @@ flowchart LR
     subgraph C["Cliente · Godot 4.7"]
         PC[PlayerController] -->|intenciones| PE[PlumberEntity]
         PE --> GM[GridManager<br/>autoridad de grilla]
-        SB[SignalBus] --- UI[HUD · Teléfono · Menús]
+        SB[SignalBus] --- UI[HUD · Hotbar · Teléfono<br/>Tienda · Opciones · Menús]
         AC[ApiClient]
         SS[SaveService<br/>snapshot binario PC3D]
     end
@@ -71,84 +87,24 @@ flowchart LR
 
 | Capa | Tecnología | Decisiones clave |
 |---|---|---|
-| **Persistencia autoritativa** | PostgreSQL 16 | 10 tablas normalizadas, 7 triggers y 12 procedimientos almacenados. Transacciones ACID en `READ COMMITTED` con bloqueo de fila (`SELECT … FOR UPDATE`). **Ledger append-only**: el saldo siempre cuadra con la suma de movimientos. Máquina de estados de tickets validada por trigger. |
-| **API REST** | NestJS · TypeScript · TypeORM | JWT asimétrico **RS256** con lista blanca de algoritmos (bloquea `HS256 con llave pública` y `alg: none`). Contraseñas con **scrypt**. Errores de negocio con códigos SQL propios `PC001–PC007` traducidos a HTTP. |
-| **Cliente** | Godot 4.7 · GDScript | Tipado estático estricto configurado como **error**. Separación Input/lógica (`PlayerController` posee a `PlumberEntity`), base de la arquitectura **MP-Ready**. Comunicación **por trabajo terminado, no por tubería**. Guardado local binario con `FileAccess`, versionado y con checksum (sin JSON ni datos económicos). |
+| **Persistencia autoritativa** | PostgreSQL 16 | 10 tablas normalizadas, 7 triggers y 12 procedimientos almacenados. Transacciones ACID con bloqueo de fila (`SELECT … FOR UPDATE`). **Ledger append-only**: el saldo siempre cuadra con la suma de movimientos. Capacidad de bodega por vehículo validada por trigger. |
+| **API REST** | NestJS · TypeScript · TypeORM | JWT asimétrico **RS256** con lista blanca de algoritmos. Contraseñas con **scrypt**. Errores de negocio `PC001–PC007` traducidos a HTTP y mostrados en español en el cliente. |
+| **Cliente** | Godot 4.7 · GDScript | Tipado estático estricto. Separación Input/lógica (`PlayerController` → `PlumberEntity`), base **MP-Ready**. La UI se comunica solo por `SignalBus` y se construye por código sobre escenas estables. |
 
-### Endpoints principales
+<details>
+<summary><b>Endpoints principales</b></summary>
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| `GET` | `/health` | Estado del servicio |
 | `POST` | `/auth/register` · `/auth/login` | Registro e inicio de sesión (JWT RS256) |
 | `GET` | `/profile` | Perfil autoritativo del jugador |
-| `GET` | `/tickets` | Tablero de tickets (presupuesto por trigger, expiración perezosa) |
-| `POST` | `/tickets/:id/accept` | Acepta el ticket y compra materiales en la misma transacción |
-| `POST` | `/tickets/:id/derive` | Deriva un ticket público a la SISS (+reputación) |
-| `POST` | `/tickets/:id/tampering` | Registra intervención de la red pública (multa / Game Over) |
-| `POST` | `/jobs/:id/complete` | Envía el resumen del trabajo; nota S–F y pago calculados en BD |
-| `POST` | `/inventory/purchase` · `/vehicles/upgrade` | Inventario limitado por la capacidad del vehículo |
-| `POST` | `/day/end` | Cierre de día y costo de vida |
+| `GET` | `/tickets` | Tablero de tickets |
+| `POST` | `/tickets/:id/accept` · `/derive` · `/tampering` | Aceptar, derivar a la SISS o registrar intervención |
+| `POST` | `/jobs/:id/complete` | Nota S–F y pago calculados en BD |
+| `GET` · `POST` | `/inventory` · `/inventory/purchase` | Bodega del vehículo y compras |
+| `POST` | `/vehicles/upgrade` · `/day/end` | Mejora de vehículo y cierre de día |
 
----
-
-## 📁 Estructura del repositorio
-
-```text
-PipeCorp3D/
-├── backend/            # API REST NestJS (src/, test/, .env.example)
-├── database/           # Scripts SQL 01–04 y run_tests.sh
-├── godot/              # Proyecto Godot (abrir godot/project.godot)
-│   ├── autoload/       # SignalBus, GridManager, ApiClient, JobSession, SaveService
-│   ├── Scripts/        # Núcleo, jugador, datos y mundo
-│   ├── UI/             # HUD, teléfono virtual, menús y pantallas
-│   ├── tests/          # Pruebas headless, Doctor y mock_api.py
-│   └── World.tscn      # Escena principal
-└── docs/               # Diagramas (mapa mental, actores, E-R, visión, impact mapping)
-```
-
----
-
-## 🚀 Instalación y ejecución
-
-### Requisitos
-
-| Herramienta | Versión |
-|---|---|
-| PostgreSQL | 16 |
-| Node.js | 18 LTS o superior |
-| Godot | 4.7 (estándar, no .NET) |
-| Git Bash | Para ejecutar los scripts `.sh` en Windows |
-
-### 1. Base de datos
-
-Crea una base de datos vacía y ejecuta los scripts **en orden (01 → 04)**:
-
-```bash
-createdb -U postgres pipecorp
-for f in database/0*.sql; do psql -U postgres -d pipecorp -f "$f"; done
-```
-
-> Usa el mismo nombre de base de datos y usuario que configures en `backend/.env`.
-
-### 2. API
-
-```bash
-cd backend
-cp .env.example .env     # completa las credenciales de la base de datos y las rutas de las llaves RSA
-npm install
-npm run start:dev
-```
-
-Verifica que la API responde en <http://localhost:3000/health>.
-
-> 🔐 El archivo `.env` y las llaves RSA **nunca** se versionan.
-
-### 3. Cliente
-
-1. Abre el **Project Manager** de Godot → **Import** → selecciona `godot/project.godot`.
-2. Con la API en ejecución, presiona **F5** (la escena principal es `World.tscn`).
-3. Haz clic en **Iniciar Turno**.
+</details>
 
 ---
 
@@ -157,109 +113,99 @@ Verifica que la API responde en <http://localhost:3000/health>.
 | Tecla | Acción |
 |---|---|
 | `W` `A` `S` `D` + mouse | Moverse y mirar |
-| `Clic` | Instalar una tubería en el socket apuntado |
-| `1` `2` / rueda | Cambiar la pieza de la hotbar (codo 90° / tubo recto) |
-| `T` | Abrir el teléfono (tablero de tickets) |
-| `B` | Abrir la Tienda (materiales y vehículos) |
+| `Clic` | Instalar la pieza seleccionada en el socket apuntado |
+| `1` `2` / rueda | Cambiar la pieza de la hotbar |
+| `T` | Teléfono (contratos) |
+| `B` | Tienda (materiales y vehículos) |
 | `F` | Terminar el trabajo en curso |
 | `C` | Cambiar de gasfíter (Player_1 ↔ Player_2) |
-| `N` | Nueva Carrera tras un Game Over |
-| `P` | Pausar / reanudar |
-| `Esc` | Liberar el mouse |
+| `P` | Pausa (incluye Opciones) |
+| `Esc` | Liberar el mouse / cerrar menús |
 
 ---
 
-## 🧪 Pruebas
+## 🧪 Calidad
 
 **170 pruebas automatizadas aprobadas · 0 errores de typecheck.** Ninguna tarjeta pasa a *Done* sin su suite en verde y evidencia adjunta.
 
-| Suite | Herramienta | Resultado |
-|---|---|---|
-| Base de datos: reglas SISS, economía y concurrencia | `run_tests.sh` | 15/15 |
-| API: tipos estrictos | `tsc --noEmit` (strict) | 0 errores |
-| API: unitarias | Jest | 8/8 |
-| API: autenticación y seguridad | Jest + Supertest (e2e) | 12/12 |
-| API: bucle de juego | Jest + Supertest (e2e) | 15/15 |
-| Godot: núcleo (grilla, entidad, arquitectura) | Escena headless | 28/28 |
-| Godot: integración cliente-servidor y guardado | Escena headless + API simulada | 24/24 |
-| Godot: prueba de humo de UI | Escena headless + API simulada | 22/22 |
-| Godot: zona SISS | Escena headless | 3/3 |
-| Godot: menú de Opciones | Escena headless | 11/11 |
-| Godot: Tienda y vehículos | Escena headless + API simulada | 16/16 |
-| Godot: Hotbar y teléfono | Escena headless | 16/16 |
+| Suite | Resultado |
+|---|---|
+| Base de datos: reglas SISS, economía y concurrencia | 15/15 |
+| API: unitarias · autenticación · bucle de juego | 8/8 · 12/12 · 15/15 |
+| Godot: núcleo (grilla, entidad, arquitectura) | 28/28 |
+| Godot: integración cliente-servidor y guardado | 24/24 |
+| Godot: humo de UI | 22/22 |
+| Godot: zona SISS | 3/3 |
+| Godot: menú de Opciones | 11/11 |
+| Godot: Tienda y vehículos | 16/16 |
+| Godot: Hotbar y teléfono | 16/16 |
 
-### Cómo ejecutarlas
-
-**Base de datos** (Git Bash):
-
-```bash
-cd database
-bash run_tests.sh
-```
-
-**API:**
-
-```bash
-cd backend
-npm run dod      # typecheck + unitarias + e2e
-```
-
-**Godot** — las pruebas de integración y de UI usan una API simulada para no tocar datos reales:
-
-```bash
-# Terminal 1: API simulada (reiníciala antes de cada suite)
-cd godot/tests
-python mock_api.py
-
-# Terminal 2: abre la escena de prueba en Godot y presiona F6
-#   res://tests/TestIntegration.tscn   → INTEGRATION DoD: 24 passed
-#   res://tests/TestUISmoke.tscn       → UI SMOKE: 22 passed
-```
-
-> 🩺 `res://tests/Doctor.tscn` (F6) diagnostica scripts que no compilan, clases duplicadas, autoloads y el cableado de `World.tscn`. No requiere la API.
+Además, `Doctor` verifica scripts, clases, autoloads y el cableado de la escena principal (0 problemas).
 
 ---
 
 ## 📊 Metodología
 
-Desarrollado con **Scrum** en tres sprints a partir de un Product Backlog derivado de la planificación de la Fase 1.
+Desarrollado con **Scrum** a partir de un Product Backlog derivado de la planificación de la Fase 1.
 
-| Sprint | Fechas | Comprometido | Terminado |
-|---|---|---|---|
-| Sprint 1 | 21–27 sep 2026 | 22 pts | 22 pts |
-| Sprint 2 | 28 sep–4 oct 2026 | 23 pts | 15 pts |
-| Sprint 3 | 5 oct 2026 | 21 + 5 pts | 26 pts |
-| **Total** | | | **63 pts · 18 historias** |
+| Sprint | Fechas | Resultado |
+|---|---|---|
+| Sprint 1 | 21–27 sep 2026 | 22 / 22 pts |
+| Sprint 2 | 28 sep–4 oct 2026 | 15 / 23 pts |
+| Sprint 3 | 5 oct 2026 | 26 pts · MVP `v1.0.0` |
+| **Sprint Alpha** | 11 oct 2026 | `v1.0.3` → `v1.1.0-alpha` |
 
-- **GitFlow:** cada tarjeta de Trello en una rama `feature/*`, integrada a `develop` con `--no-ff`; releases etiquetadas en `main` (`v1.0.0-mvp`, `v1.0.1`, `v1.0.2`).
-- **Definition of Done:** código auditado, tipado estricto sin advertencias, suites al 100%, secretos fuera del repositorio y evidencia adjunta en Trello.
-- **Trazabilidad:** 17 ajustes justificados respecto de la Fase 1, documentados en el portafolio.
+- **GitFlow:** cada tarjeta de Trello en una rama `feature/*`, integrada a `develop` con `--no-ff`; cada versión pasa por `release/*` y se etiqueta en `main`.
+- **Definition of Done:** tipado estricto sin advertencias, suites al 100 %, secretos fuera del repositorio y evidencia adjunta en Trello.
 
 ### Historial de versiones
 
 | Versión | Contenido |
 |---|---|
-| `v1.0.5` | Hotbar de 2 espacios ([1]/[2]/rueda) y rediseño del teléfono, prueba nueva (16/16) |
-| `v1.0.4` | Tienda de materiales y mejora de vehículos ([B] o botón del teléfono), prueba nueva de la Tienda (16/16) |
-| `v1.0.3` | Menú de Opciones (visual) en el menú principal y en la pausa, etiqueta de versión, prueba nueva de Opciones (11/11) |
-| `v1.0.2` | README profesional del repositorio |
-| `v1.0.1` | Menú de pausa (`P`), correcciones del Doctor y de la API simulada, proyecto Godot movido a la raíz de `godot/` |
+| `v1.1.0-alpha` | HUD unificado con indicadores y teclas; README de entrega |
+| `v1.0.5` | Hotbar de 2 espacios y rediseño del teléfono |
+| `v1.0.4` | Tienda de materiales y mejora de vehículos |
+| `v1.0.3` | Menú de Opciones (visual) y etiqueta de versión |
+| `v1.0.2` | README profesional |
+| `v1.0.1` | Menú de pausa y correcciones de pruebas |
 | `v1.0.0-mvp` | MVP jugable de punta a punta: 18 historias, 63 puntos |
 
 ---
 
 ## 🗺️ Roadmap
 
-Diferido a **v1.1**, con su justificación documentada:
+**Completado en el Sprint Alpha**
 
-- [x] Hotbar de 2 espacios *(v1.0.5; rango F visible, la progresión F–S queda para v1.1)*
+- [x] Interfaz de tienda y mejora de vehículos
+- [x] Hotbar de 2 espacios (rango F visible)
+
+**Próximo: v1.2**
+
+- [ ] Opciones funcionales (audio, video y sensibilidad aplicados y guardados)
+- [ ] Progresión de herramientas de rango F a S con efecto en la nota
 - [ ] Sellado con llave y partículas de fuga
-- [x] Interfaz de tienda y mejora de vehículos *(v1.0.4)*
 - [ ] Contratos desbloqueados por XP
 - [ ] Cuentas independientes por gasfíter (multijugador real)
 - [ ] Contenedor Docker para levantar base de datos y API con un comando
 
 ---
+
+<details>
+<summary><b>📁 Estructura del repositorio</b></summary>
+
+```text
+PipeCorp3D/
+├── backend/     API REST NestJS
+├── database/    Scripts SQL 01–05 (esquema, triggers, procedimientos, datos, pruebas)
+└── godot/       Proyecto Godot
+    ├── autoload/   SignalBus, GridManager, ApiClient, JobSession, SaveService
+    ├── Scripts/    Núcleo, jugador, datos y mundo
+    ├── UI/         HUD, hotbar, teléfono, tienda, opciones y menús
+    ├── tests/      Pruebas headless, Doctor y API simulada
+    └── World.tscn  Escena principal
+```
+
+</details>
 
 ## 👤 Autor
 

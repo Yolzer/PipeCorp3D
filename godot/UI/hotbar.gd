@@ -5,7 +5,7 @@ extends Control
 ## Cada espacio muestra la pieza que instala el clic y el rango de la herramienta (F–S).
 
 const SLOT_SIZE: Vector2 = Vector2(170, 64)
-const BOTTOM_GAP: float = 54.0          # deja libre la barra inferior del HUD
+const BOTTOM_GAP: float = 62.0          # deja libre la barra inferior del HUD
 const COLOR_SELECTED: Color = Color(0.98, 0.76, 0.2)
 const COLOR_IDLE: Color = Color(0.35, 0.38, 0.45)
 const RANK_COLORS: Dictionary[String, Color] = {
